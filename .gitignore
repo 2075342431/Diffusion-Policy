@@ -1,0 +1,44 @@
+# ── 训练产出（体积巨大） ──
+outputs/
+checkpoints/
+logs/
+
+# ── 数据集 & 轨迹数据 ──
+data/raw/
+data/replay/
+data/videos/
+data/lerobot_pickcube_997/
+data/*.h5
+data/*.json
+
+# ── 外部依赖 ──
+lerobot/
+
+# ── 运行时产出 ──
+videos/
+*.mp4
+
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+.eggs/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# ── 虚拟环境 ──
+.venv/
+venv/
+env/
+
+# ── IDE ──
+.idea/
+*.swp
+*.swo
+*~
+
+# ── 系统文件 ──
+.DS_Store
+Thumbs.db

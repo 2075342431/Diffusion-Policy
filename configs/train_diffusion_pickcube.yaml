@@ -1,0 +1,47 @@
+# ============================================================================
+# Diffusion Policy 训练配置 — PickCube-v1 (ManiSkill 3)
+# 硬件：NVIDIA RTX 4060 Laptop (8GB VRAM)
+# 数据集：997 条专家轨迹，96×96 RGB + 9维关节状态 + 8维动作
+# ============================================================================
+
+# ---- 数据集 ----
+dataset:
+  repo_id: /home/kk/桌面/mianshi/embd-ai-project/data/lerobot_pickcube_997
+
+# ---- 策略模型 ----
+policy:
+  type: diffusion
+  device: cuda
+  use_amp: true           # ★ 自动混合精度，节省 ~30% 显存
+  push_to_hub: false      # 不上传 HF Hub
+
+  # 架构参数（使用默认值，适配 8GB 显存）
+  # vision_backbone: resnet18  (默认)
+  # down_dims: [512, 1024, 2048]  (3阶段 UNet)
+  # horizon: 64                 (预测未来 64 步)
+  # n_action_steps: 32          (每次执行 32 步)
+  # n_obs_steps: 2              (输入 2 帧观测)
+  # num_train_timesteps: 100    (扩散步数)
+  # spatial_softmax_num_keypoints: 32
+
+# ---- 训练超参数 ----
+batch_size: 8             # 8GB 显存安全值；若 OOM 降至 4
+num_workers: 2            # 数据加载进程数（减少 CPU 内存占用）
+steps: 50000              # 训练步数 (~8 epochs)
+log_freq: 100             # 每 100 步打印 loss
+save_freq: 10000          # 每 10000 步保存 checkpoint
+save_checkpoint: true
+eval_freq: 0              # 训练中不评估（lerobot 环境无 ManiSkill）
+seed: 1000
+
+# ---- 优化器 ----
+# 使用 Diffusion Policy 内置预设：Adam(lr=1e-4, betas=(0.95, 0.999))
+# use_policy_training_preset: true (默认)
+
+# ---- 输出目录 ----
+output_dir: /home/kk/桌面/mianshi/embd-ai-project/outputs/train/pickcube_diffusion
+job_name: pickcube_diffusion
+
+# ---- WandB (关闭) ----
+wandb:
+  enable: false
