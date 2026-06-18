@@ -2,6 +2,7 @@
 outputs/
 checkpoints/
 logs/
+projects/
 
 # ── 数据集 & 轨迹数据 ──
 data/raw/

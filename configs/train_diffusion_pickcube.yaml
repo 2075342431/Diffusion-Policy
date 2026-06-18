@@ -25,9 +25,9 @@ policy:
   # spatial_softmax_num_keypoints: 32
 
 # ---- 训练超参数 ----
-batch_size: 8             # 8GB 显存安全值；若 OOM 降至 4
-num_workers: 2            # 数据加载进程数（减少 CPU 内存占用）
-steps: 50000              # 训练步数 (~8 epochs)
+batch_size: 64            # 充分利用显存，提速收敛 (从 8 提升)
+num_workers: 4            # 数据加载进程数（提升 IO 效率）
+steps: 500000             # 训练步数 (约 32 epochs，提升至完全收敛)
 log_freq: 100             # 每 100 步打印 loss
 save_freq: 10000          # 每 10000 步保存 checkpoint
 save_checkpoint: true
