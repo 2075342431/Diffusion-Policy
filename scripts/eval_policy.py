@@ -109,10 +109,10 @@ def main():
             with torch.no_grad():
                 action = policy.select_action(batch)  # (action_dim,)
 
-            action = action.cpu().numpy()
-            # 适配 ManiSkill GPU backend: 需要 (1, 8) 的动作
+            # 适配 ManiSkill GPU backend: 需要 (1, 8) 的 Tensor
             if action.ndim == 1:
-                action = action[np.newaxis, :]
+                action = action.unsqueeze(0)
+            action = torch.clamp(action, -1.0, 1.0)
 
             # 3. 执行动作
             obs, reward, terminated, truncated, info = env.step(action)
